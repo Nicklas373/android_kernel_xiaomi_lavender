@@ -6263,6 +6263,7 @@ static void destroy_perf_domain_rcu(struct rcu_head *rp)
  *    1. an Energy Model (EM) is available;
  *    2. the SD_ASYM_CPUCAPACITY flag is set in the sched_domain hierarchy.
  *    3. the EM complexity is low enough to keep scheduling overheads low;
+ *    4. schedutil is driving the frequency of all CPUs of the rd;
  *
  * The complexity of the Energy Model is defined as:
  *
@@ -6306,6 +6307,19 @@ static void build_perf_domains(const struct cpumask *cpu_map)
 		/* Skip already covered CPUs. */
 		if (find_pd(pd, i))
 			continue;
+		
+		/* Do not attempt EAS if schedutil is not being used. */
+		policy = cpufreq_cpu_get(i);
+		if (!policy)
+			goto free;
+		gov = policy->governor;
+		cpufreq_cpu_put(policy);
+		if (gov != &cpufreq_gov_schedutil) {
+			if (rd->pd)
+				pr_warn("rd %*pbl: Disabling EAS, schedutil is mandatory\n",
+						cpumask_pr_args(cpu_map));
+			goto free;
+		}
 
 		/* Create the new pd and add it to the local list. */
 		tmp = pd_init(i);
