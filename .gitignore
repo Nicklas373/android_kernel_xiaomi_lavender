@@ -39,7 +39,6 @@ Module.symvers
 *.dwo
 *.su
 *.log
-*.sh
 
 #
 # Top-level generic files
@@ -121,4 +120,3 @@ android/configs/android-*.cfg
 
 # Object directory
 out/
-chewy/
