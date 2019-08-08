@@ -282,8 +282,6 @@ config CPU_FREQ_GOV_PWRUTILX
 
 	  If in doubt, say N.
 
-endif
-
 config CPU_FREQ_GOV_SCHEDALUCARD
 	bool "'schedalucard' cpufreq policy governor"
 	depends on CPU_FREQ && SMP
