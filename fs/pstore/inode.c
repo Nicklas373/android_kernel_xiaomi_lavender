@@ -424,7 +424,6 @@ int pstore_mkfile(enum pstore_type_id type, char *psname, u64 id, int count,
 		console_bufsize = size;
 	}
 #endif
-
 	mutex_unlock(&d_inode(root)->i_mutex);
 
 	return 0;
@@ -504,11 +503,8 @@ static int __init init_pstore_fs(void)
 		goto out;
 
 	err = register_filesystem(&pstore_fs_type);
-	if (err < 0) {
+	if (err < 0)
 		sysfs_remove_mount_point(fs_kobj, "pstore");
-		goto out;
-	}
-
 #ifdef CONFIG_PSTORE_LAST_KMSG
 	last_kmsg_entry = proc_create_data("last_kmsg", S_IFREG | S_IRUGO,
 				NULL, &last_kmsg_fops, NULL);
