@@ -206,7 +206,7 @@ static void do_input_boost_rem(struct work_struct *work)
 		i_sync_info = &per_cpu(sync_info, i);
 		i_sync_info->input_boost_min = 0;
 	}
-	
+
 	/* Update policies for all online CPUs */
 	update_policy_online();
 }
@@ -224,7 +224,6 @@ static void do_dynamic_stune_boost_rem(struct work_struct *work)
 	/* Update policies for all online CPUs */
 	update_policy_online();
 }
-#endif /* CONFIG_DYNAMIC_STUNE_BOOST */
 
 void do_input_boost_max()
 {
