@@ -36,7 +36,7 @@ static DEFINE_PER_CPU(struct cpu_sync, sync_info);
 static unsigned int input_boost_enabled = 0;
 module_param(input_boost_enabled, uint, 0644);
 
-static unsigned int input_boost_ms = 0;
+static unsigned int input_boost_ms = 40;
 module_param(input_boost_ms, uint, 0644);
 
 static unsigned int powerkey_input_boost_ms = 400;
