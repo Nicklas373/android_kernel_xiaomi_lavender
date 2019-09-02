@@ -42,7 +42,7 @@ module_param(input_boost_ms, uint, 0644);
 static unsigned int powerkey_input_boost_ms = 400;
 module_param(powerkey_input_boost_ms, uint, 0644);
 
-static bool sched_boost_on_powerkey_input = true;
+static bool sched_boost_on_powerkey_input = false;
 module_param(sched_boost_on_powerkey_input, bool, 0644);
 
 #ifdef CONFIG_DYNAMIC_STUNE_BOOST
@@ -206,7 +206,7 @@ static void do_input_boost_rem(struct work_struct *work)
 		i_sync_info = &per_cpu(sync_info, i);
 		i_sync_info->input_boost_min = 0;
 	}
-
+	
 	/* Update policies for all online CPUs */
 	update_policy_online();
 }
@@ -219,11 +219,8 @@ static void do_dynamic_stune_boost_rem(struct work_struct *work)
 		reset_stune_boost("top-app", boost_slot);
 		stune_boost_active = false;
 	}
-#endif /* CONFIG_DYNAMIC_STUNE_BOOST */
-
-	/* Update policies for all online CPUs */
-	update_policy_online();
 }
+#endif /* CONFIG_DYNAMIC_STUNE_BOOST */
 
 void do_input_boost_max()
 {
